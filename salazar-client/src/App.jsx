@@ -1,18 +1,44 @@
-import React from 'react';
 import './App.css';
+import Layout from './components/Layout';
+import AboutPage from './pages/AboutPage';
+import ArticleListPage from './pages/ArticleListPage';
+import ArticlePage from './pages/ArticlePage';
+import HomePage from './pages/HomePage';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import NotFoundPage from './pages/NotFoundPage';
+
+const routes = [{
+  path: '/',
+  element: <Layout />,
+  // Error element
+  errorElement: <NotFoundPage />,
+  children: [{
+    // Path declaration
+    path: '/',
+    element: <HomePage />
+  },
+  {
+    path: '/about',
+    element: <AboutPage />
+  },
+  {
+    path: '/articles',
+    element: <ArticleListPage />
+  },
+  {
+    path: '/articles/:name', // -->articles/learn-react
+    element: <ArticlePage />
+  }
+  ]
+}]
+
+const router = createBrowserRouter(routes);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome to My React App!</h1>
-        <p>
-          Name: Salazar, Cheska Ann Lorein Jose<br />
-          Email: cheskasalazar11@gmail.com<br />
-          Other Personal Info: Bachelor of Science in Information Technology
-        </p>
-      </header>
-    </div>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
 }
 
