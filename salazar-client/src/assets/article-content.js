@@ -1,40 +1,39 @@
 const articles = [
   {
-    name: 'care-guide-and-styling',
-    title: 'Understanding React Props and Styling',
+    name: "ballerina-cappucina",
+    title: "Ballerina Cappucina",
     content: [
-      'There are read-only and essential for component reusability. Props allow information to flow down. (props-name)',
-      'CSS Modules: A fantastic approach to component style (.module.css files). CSS Modules provide multiple styling approaches (inline styles, CSS files, Tailwind).',
-    ],
-    styles: 'TextStyle',
+      "Tung Tung Sahur Brr Brr Patapim Tralalero Tralala Bombardiro Crocodilo Chimpanzini Bananini..."
+    ]
   },
   {
-    name: 'react-functional-components',
-    title: 'React Functional Components',
+    name: "skibidi-toilet",
+    title: "Skibidi Toilet",
     content: [
-      'Functional components are simple Javadoc-like functions that return JSX and  manage state and perform lifecycle operations.',
-      'Examples: (function helloWorld() { return <h1>Hello World</h1>; }). Use return statements and performance benefits.',
-    ],
-    styles: 'react-classLifecycle',
+      "Skibidi, what? Skibidi, who? Skibidi, yeah. Skibidi, what? Skibidi, who? Skibidi, yeah. Skibidi, wha..."
+    ]
   },
   {
-    name: 'react-component-lifecycle',
-    title: 'React Component Lifecycle',
+    name: "delulu-is-the-solulu",
+    title: "Delulu is the Solulu",
     content: [
-      'Class components have lifecycle methods: mounting, updating, and unmounting (componentDidMount, componentDidUpdate, componentWillUnmount).',
-      'Example: (useEffect(fetchData) => { ... }). const example = useEffect(() => { console.log(\'Mounted!\'); return () => { ... }; }); []; return (...).',
-    ],
-    styles: 'react-lifecycle-hooks',
+      "Popularized Gen Z expression meaning \"Delusion is the Solution.\" When you believe hard enough, the u..."
+    ]
   },
   {
-    name: 'react-state-management',
-    title: 'Managing State in React',
+    name: "bombastic-side-eye",
+    title: "Bombastic Side Eye",
     content: [
-      'State allows components to track and manage dynamic data. useState hook makes interactive components and updates triggers a re-render with new state values.',
-      'Example: (counter)(useState) { const [count, setCount] = useState(0); return <button onClick={() => setCount(count + 1)}>{count}</button> }',
-    ],
-    styles: 'react-feeling-better',
+      "Bombastic side eye. Criminal, offensive side eye. Do you understand?..."
+    ]
   },
+  {
+    name: "main-character-energy",
+    title: "Main Character Energy",
+    content: [
+      "I'm not part of the story—I am the story....."
+    ]
+  }
 ];
 
 export default articles;

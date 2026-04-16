@@ -7,7 +7,8 @@ import HomePage from './pages/HomePage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NotFoundPage from './pages/NotFoundPage';
 
-const routes = [{
+const routes = [
+{
   path: '/',
   element: <Layout />,
   // Error element
@@ -30,7 +31,12 @@ const routes = [{
     element: <ArticlePage />
   }
   ]
-}]
+},
+{
+  path: '/404',
+  element: <NotFoundPage />
+}
+]
 
 const router = createBrowserRouter(routes);
 

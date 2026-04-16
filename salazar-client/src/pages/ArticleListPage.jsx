@@ -4,36 +4,65 @@ import articles from '../assets/article-content.js';
 
 const ArticleListPage = () => {
   return (
-    <div className="flex w-full flex-col gap-6">
-      <section className="border-y-2 border-zinc-900 bg-zinc-50 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
-          Articles
-        </p>
-        <h1 className="max-w-xl text-3xl font-bold leading-tight text-zinc-900 sm:text-4xl">
-          Featured articles in a simple card grid
-        </h1>
-        <p className="mt-4 max-w-lg text-sm leading-7 text-zinc-600 sm:text-base">
-          A clean wireframe section for article thumbnails, titles, short
-          descriptions, and one per card.
-        </p>
+    <div style={{ width: '100%', background: '#ffffff' }}>
 
-        <div className="mt-6">
-          <Button to="/">Back Home</Button>
-        </div>
-      </section>
-
-      <section className="border-y-2 border-zinc-900 bg-zinc-50 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        <div className="mb-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
-            Featured Articles
+      {/* HERO SECTION */}
+      <section style={{ paddingTop: '5rem', paddingBottom: '4rem', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+        <div style={{ paddingLeft: '2rem', paddingRight: '2rem' }}>
+          <p style={{ marginBottom: '3.5rem', fontSize: '0.875rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#ec4899' }}>
+            Articles
           </p>
-          <h2 className="mt-2 text-2xl font-semibold text-zinc-900">
-            Article card grid
-          </h2>
-        </div>
 
-        <ArticleList articles={articles} />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: '4rem', alignItems: 'center' }}>
+            <div>
+              <h1 style={{ marginBottom: '1.5rem', fontSize: '3rem', fontWeight: '800', color: '#000', lineHeight: '1.1' }}>
+                Fuggler Guide in a<br />Simple Card Grid
+              </h1>
+              <p style={{ marginBottom: '2rem', fontSize: '1rem', color: '#6b7280', lineHeight: '1.6' }}>
+                A delightful showcase of our Fuggler collection with unique profiles.
+              </p>
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <Button to="/">Back Home</Button>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
+
+      {/* DIVIDER */}
+      <div style={{
+        margin: '0 2rem',
+        height: '2px',
+        background: 'linear-gradient(to right, transparent, #fbcfe8 20%, #fbcfe8 80%, transparent)',
+        boxShadow: '0 4px 10px rgba(236, 72, 153, 0.2)',
+        borderRadius: '9999px'
+      }} />
+
+      {/* ARTICLES SECTION */}
+      <section
+        style={{
+          background: '#ffffff',
+          paddingTop: '3rem',
+          paddingBottom: '3rem',
+          width: '100vw',
+          marginLeft: 'calc(-50vw + 50%)',
+          border: 'none',
+          boxShadow: 'none'
+        }}
+      >
+        <div style={{ paddingLeft: '4rem', paddingRight: '4rem' }}>
+          <p style={{ marginBottom: '1.5rem', fontSize: '0.75rem', fontWeight: '600', textTransform: 'uppercase', color: '#ec4899' }}>
+            Fuggler Articles
+          </p>
+
+          <h2 style={{ marginBottom: '3rem', fontSize: '1.5rem', fontWeight: '700', color: '#000' }}>
+            Fuggler Guide
+          </h2>
+
+          <ArticleList articles={articles} />
+        </div>
+      </section>
+
     </div>
   );
 };
