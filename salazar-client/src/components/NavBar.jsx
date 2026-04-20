@@ -50,7 +50,7 @@ const NavBar = () => {
                       background: 'linear-gradient(135deg, #ec4899 0%, #db2777 100%)',
                       color: 'white',
                       padding: '0.5rem 1.25rem',
-                      borderRadius: '0.75rem',
+                      borderRadius: '2rem',
                       boxShadow: '0 4px 12px rgba(236, 72, 153, 0.3)'
                     }
                   : {
@@ -63,6 +63,33 @@ const NavBar = () => {
             </NavLink>
           ))}
         </nav>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <NavLink
+            to="/auth/signin"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              color: '#fff',
+              padding: '0.5rem 1.25rem',
+              background: 'linear-gradient(135deg, #ec4899 0%, #db2777 100%)',
+              borderRadius: '2rem',
+              border: 'none',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 12px rgba(236, 72, 153, 0.3)',
+              cursor: 'not-allowed',
+              opacity: 0.7
+            }}
+          >
+            Sign In
+          </NavLink>
+        </div>
       </div>
     </header>
   );

@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <div style={{ width: '100%', background: '#ffffff' }}>
       {/* Hero Section */}
-      <section style={{ paddingTop: '5rem', paddingBottom: '4rem', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+      <section style={{ paddingTop: '1rem', paddingBottom: '4rem', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
         <div style={{ paddingLeft: '2rem', paddingRight: '2rem' }}>
           <p style={{ marginBottom: '2.5rem', fontSize: '0.875rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#ec4899' }}>
             Meet Our Fuzzy Friend

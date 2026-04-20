@@ -7,7 +7,7 @@ const ArticleListPage = () => {
     <div style={{ width: '100%', background: '#ffffff' }}>
 
       {/* HERO SECTION */}
-      <section style={{ paddingTop: '5rem', paddingBottom: '4rem', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+      <section style={{ paddingTop: '1rem', paddingBottom: '4rem', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
         <div style={{ paddingLeft: '2rem', paddingRight: '2rem' }}>
           <p style={{ marginBottom: '3.5rem', fontSize: '0.875rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#ec4899' }}>
             Articles
@@ -30,13 +30,14 @@ const ArticleListPage = () => {
       </section>
 
       {/* DIVIDER */}
-      <div style={{
-        margin: '0 2rem',
-        height: '2px',
-        background: 'linear-gradient(to right, transparent, #fbcfe8 20%, #fbcfe8 80%, transparent)',
-        boxShadow: '0 4px 10px rgba(236, 72, 153, 0.2)',
-        borderRadius: '9999px'
-      }} />
+      <div
+  style={{
+    width: '100vw',
+    height: '2px',
+    background: '#fbcfe8', // solid color
+    marginLeft: 'calc(-50vw + 50%)'
+  }}
+/>
 
       {/* ARTICLES SECTION */}
       <section

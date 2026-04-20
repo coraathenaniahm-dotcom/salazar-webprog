@@ -13,13 +13,13 @@ const ArticlePage = () => {
     <div style={{ width: '100%', background: '#ffffff' }}>
       
       {/* Hero Section */}
-      <section style={{ padding: '2rem 0', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+      <section style={{ padding: '1rem 0', width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
         <div style={{ padding: '0 2rem' }}>
           <p style={{ fontSize: '0.75rem', fontWeight: '600', textTransform: 'uppercase', color: '#6b7280' }}>
             Fuggler Collection
           </p>
 
-          <h1 style={{ marginBottom: '2.5rem', fontSize: '3rem', fontWeight: '800', color: '#000', lineHeight: '1.1' }}>
+          <h1 style={{ marginBottom: '0.75rem', fontSize: '3rem', fontWeight: '800', color: '#000', lineHeight: '1.1' }}>
             Fuggler Guide in a Simple Card Grid
           </h1>
 
