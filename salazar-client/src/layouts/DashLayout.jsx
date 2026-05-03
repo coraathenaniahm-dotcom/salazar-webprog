@@ -6,7 +6,6 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 import PeopleIcon from "@mui/icons-material/People";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import SearchIcon from "@mui/icons-material/Search";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const SIDEBAR_W = 230;
@@ -34,7 +33,7 @@ export default function DashLayout() {
       width: "100vw",
       maxWidth: "100vw",
       overflow: "hidden",
-      position: "fixed",      // ← anchors to viewport, kills page scroll
+      position: "fixed",
       top: 0,
       left: 0,
       fontFamily: "'DM Sans', sans-serif",
@@ -122,8 +121,8 @@ export default function DashLayout() {
       {/* RIGHT COLUMN */}
       <Box sx={{
         flex: 1,
-        minWidth: 0,                                   // ← allows shrinking below content size
-        width: `calc(100vw - ${sw}px)`,               // ← explicit width, never exceeds viewport
+        minWidth: 0,
+        width: `calc(100vw - ${sw}px)`,
         maxWidth: `calc(100vw - ${sw}px)`,
         display: "flex",
         flexDirection: "column",
@@ -153,22 +152,6 @@ export default function DashLayout() {
           }}>
             {currentTitle}
           </Typography>
-
-          <Box sx={{
-            display: "flex", alignItems: "center", gap: "8px",
-            background: "#F7F0F3", border: "1px solid #F0D6E2",
-            borderRadius: "9px", px: "12px", py: "7px",
-            width: 240, flexShrink: 0,
-          }}>
-            <SearchIcon sx={{ fontSize: 15, color: "#9E7A8A", flexShrink: 0 }} />
-            <input
-              placeholder="Search..."
-              style={{
-                border: "none", background: "transparent", outline: "none",
-                fontSize: "13px", color: "#2D1B27", width: "100%", fontFamily: "inherit",
-              }}
-            />
-          </Box>
 
           <Box sx={{ flexGrow: 1, minWidth: 0 }} />
 
@@ -205,8 +188,8 @@ export default function DashLayout() {
         <Box sx={{
           flex: 1,
           minHeight: 0,
-          overflowY: "auto",    // ← vertical scroll inside content area only
-          overflowX: "hidden",  // ← no horizontal scroll ever
+          overflowY: "auto",
+          overflowX: "hidden",
           px: "24px",
           py: "24px",
           backgroundColor: "#F7F0F3",
