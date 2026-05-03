@@ -298,7 +298,7 @@ const SignUpPage = () => {
                       e.target.style.borderColor = "rgba(236, 72, 153, 0.2)";
                     }}
                   >
-                  🔵 Google
+                  Google
                   </button>
                   <button
                     type="button"
@@ -312,7 +312,7 @@ const SignUpPage = () => {
                       e.target.style.borderColor = "rgba(236, 72, 153, 0.2)";
                     }}
                   >
-                  🍎 Apple
+                  Apple
                   </button>
                 </div>
               </div>

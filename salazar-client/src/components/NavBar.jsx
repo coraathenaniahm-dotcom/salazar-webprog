@@ -26,10 +26,32 @@ const NavBar = () => {
         padding: '1rem 2rem',
         maxWidth: '100%'
       }}>
-        <NavLink to="/" style={{ height: '2.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
-          <img src={logo} alt="Logo" style={{ height: '100%', width: 'auto' }} />
-          <span style={{ color: '#000', fontWeight: '700', fontSize: '1.25rem', letterSpacing: '0.05em', textShadow: '0 4px 12px rgba(236, 72, 153, 0.3)' }}>FUGGLERS</span>
-        </NavLink>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <NavLink 
+            to="/dashboard"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              width: '2.5rem',
+              height: '2.5rem',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+            }}
+            title="Go to Dashboard"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#000' }}>
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </NavLink>
+          <NavLink to="/" style={{ height: '2.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
+            <img src={logo} alt="Logo" style={{ height: '100%', width: 'auto' }} />
+            <span style={{ color: '#000', fontWeight: '700', fontSize: '1.25rem', letterSpacing: '0.05em', textShadow: '0 4px 12px rgba(236, 72, 153, 0.3)' }}>FUGGLERS</span>
+          </NavLink>
+        </div>
 
         <nav style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
           {links.map((link) => (
