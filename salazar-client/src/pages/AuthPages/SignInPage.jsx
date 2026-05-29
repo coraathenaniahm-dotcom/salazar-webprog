@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { loginUser } from "../../services/UserService";
 import potatobanana from "../../assets/potatobanana.jpg";
 
 const SignInPage = () => {
@@ -9,6 +10,8 @@ const SignInPage = () => {
     password: "",
     rememberMe: false,
   });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
@@ -16,12 +19,33 @@ const SignInPage = () => {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+    setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Navigate to home page
-    navigate("/");
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await loginUser({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      const userData = response.data.user;
+
+      // Store user data in localStorage
+      localStorage.setItem("user", JSON.stringify(userData));
+      if (formData.rememberMe) {
+        localStorage.setItem("rememberMe", "true");
+      }
+
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed. Please try again.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,10 +79,8 @@ const SignInPage = () => {
 
         {/* Left Side - Character & Welcome */}
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", position: "relative" }}>
-          {/* Decorative Circle Background */}
           <div style={{ position: "absolute", width: "280px", height: "280px", borderRadius: "50%", background: "rgba(236, 72, 153, 0.06)", filter: "blur(30px)", zIndex: 0 }}></div>
           
-          {/* Character Image */}
           <img 
             src={potatobanana} 
             alt="Potatobanana" 
@@ -74,7 +96,6 @@ const SignInPage = () => {
             }} 
           />
 
-          {/* Welcome Text */}
           <div style={{ textAlign: "center", marginTop: "2rem", position: "relative", zIndex: 2 }}>
             <h2 style={{ fontSize: "1.8rem", fontWeight: "800", color: "#ec4899", marginBottom: "0.5rem", letterSpacing: "-0.5px" }}>
               Welcome Back
@@ -84,7 +105,6 @@ const SignInPage = () => {
             </p>
           </div>
 
-          {/* Stats */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "2rem", position: "relative", zIndex: 2, width: "100%" }}>
             <div style={{ textAlign: "center", padding: "1rem", borderRadius: "1rem", background: "rgba(236, 72, 153, 0.08)", backdropFilter: "blur(10px)" }}>
               <div style={{ fontSize: "1.5rem", fontWeight: "800", color: "#ec4899" }}>1M+</div>
@@ -99,10 +119,8 @@ const SignInPage = () => {
 
         {/* Right Side - Form */}
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingRight: "0.5rem", animation: "slideIn 0.6s ease-out" }}>
-          {/* Form Card */}
           <div style={{ background: "rgba(15, 23, 42, 0.85)", backdropFilter: "blur(20px)", borderRadius: "1.5rem", padding: "1.5rem", boxShadow: "0 25px 50px rgba(236, 72, 153, 0.15), inset 0 1px 0 rgba(236, 72, 153, 0.1)", border: "1px solid rgba(236, 72, 153, 0.2)" }}>
             
-            {/* Form Header */}
             <div style={{ marginBottom: "0.6rem", marginTop: "0.3rem" }}>
               <h1 style={{ fontSize: "1.6rem", fontWeight: "900", color: "#ec4899", marginBottom: "0.1rem", letterSpacing: "-0.5px", marginTop: 0 }}>
                 Sign In
@@ -113,6 +131,13 @@ const SignInPage = () => {
             </div>
 
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+              {/* Error Message */}
+              {error && (
+                <div style={{ padding: "0.75rem", borderRadius: "0.75rem", background: "rgba(220, 38, 38, 0.1)", border: "1px solid rgb(220, 38, 38)", color: "#fca5a5", fontSize: "0.75rem" }}>
+                  {error}
+                </div>
+              )}
+
               {/* Email Input */}
               <div>
                 <label htmlFor="email" style={{ display: "block", fontSize: "0.7rem", fontWeight: "700", color: "#cbd5e1", marginBottom: "0.3rem", letterSpacing: "0.05em" }}>
@@ -127,7 +152,7 @@ const SignInPage = () => {
                   placeholder="you@example.com"
                   autoComplete="email"
                   required
-                    style={{ width: "100%", padding: "0.7rem 0.75rem", fontSize: "0.8rem", border: "2px solid rgba(236, 72, 153, 0.2)", borderRadius: "0.75rem", background: "rgba(236, 72, 153, 0.05)", color: "#e2e8f0", outline: "none", transition: "all 0.3s", boxSizing: "border-box" }}
+                  style={{ width: "100%", padding: "0.7rem 0.75rem", fontSize: "0.8rem", border: "2px solid rgba(236, 72, 153, 0.2)", borderRadius: "0.75rem", background: "rgba(236, 72, 153, 0.05)", color: "#e2e8f0", outline: "none", transition: "all 0.3s", boxSizing: "border-box" }}
                   onFocus={(e) => {
                     e.target.style.borderColor = "#ec4899";
                     e.target.style.boxShadow = "0 0 0 3px rgba(236, 72, 153, 0.1)";
@@ -190,17 +215,22 @@ const SignInPage = () => {
               {/* Sign In Button */}
               <button
                 type="submit"
-                style={{ width: "100%", padding: "0.85rem", fontSize: "0.75rem", fontWeight: "800", color: "white", background: "linear-gradient(135deg, #ec4899 0%, #db2777 100%)", border: "none", borderRadius: "0.75rem", cursor: "pointer", transition: "all 0.3s", boxShadow: "0 10px 30px rgba(236, 72, 153, 0.3)", letterSpacing: "0.05em", textTransform: "uppercase", marginTop: "0.3rem" }}
+                disabled={loading}
+                style={{ width: "100%", padding: "0.85rem", fontSize: "0.75rem", fontWeight: "800", color: "white", background: loading ? "#888" : "linear-gradient(135deg, #ec4899 0%, #db2777 100%)", border: "none", borderRadius: "0.75rem", cursor: loading ? "not-allowed" : "pointer", transition: "all 0.3s", boxShadow: "0 10px 30px rgba(236, 72, 153, 0.3)", letterSpacing: "0.05em", textTransform: "uppercase", marginTop: "0.3rem" }}
                 onMouseEnter={(e) => {
-                  e.target.style.boxShadow = "0 15px 45px rgba(236, 72, 153, 0.4)";
-                  e.target.style.transform = "translateY(-2px)";
+                  if (!loading) {
+                    e.target.style.boxShadow = "0 15px 45px rgba(236, 72, 153, 0.4)";
+                    e.target.style.transform = "translateY(-2px)";
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.boxShadow = "0 10px 30px rgba(236, 72, 153, 0.3)";
-                  e.target.style.transform = "translateY(0)";
+                  if (!loading) {
+                    e.target.style.boxShadow = "0 10px 30px rgba(236, 72, 153, 0.3)";
+                    e.target.style.transform = "translateY(0)";
+                  }
                 }}
               >
-                Enter The Gate
+                {loading ? "Signing In..." : "Enter The Gate"}
               </button>
             </form>
 

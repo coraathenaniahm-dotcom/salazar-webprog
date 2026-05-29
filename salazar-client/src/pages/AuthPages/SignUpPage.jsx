@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { createUser } from "../../services/UserService";
 import potatobanana from "../../assets/potatobanana.jpg";
 
 const SignUpPage = () => {
@@ -14,6 +15,8 @@ const SignUpPage = () => {
   });
 
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
@@ -25,16 +28,46 @@ const SignUpPage = () => {
     if (name === "confirmPassword" || name === "password") {
       setPasswordMatch(name === "password" ? value === formData.confirmPassword : formData.password === value);
     }
+    setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (formData.password !== formData.confirmPassword) {
       setPasswordMatch(false);
       return;
     }
-    // Navigate to sign in page
-    navigate("/auth/signin");
+
+    if (!formData.agreeToTerms) {
+      setError("You must agree to the terms and conditions.");
+      return;
+    }
+
+    setError("");
+    setLoading(true);
+
+    try {
+      await createUser({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        username: formData.email.split("@")[0],
+        age: "18",
+        gender: "Male",
+        contactNumber: "00000000000",
+        address: "Not provided",
+        type: "editor",
+        isActive: true,
+      });
+
+      alert("Sign up successful! Please log in.");
+      navigate("/auth/signin");
+    } catch (err) {
+      setError(err.response?.data?.message || "Sign up failed. Please try again.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -126,6 +159,13 @@ const SignUpPage = () => {
             </div>
 
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+              {/* Error Message */}
+              {error && (
+                <div style={{ padding: "0.75rem", borderRadius: "0.75rem", background: "rgba(220, 38, 38, 0.1)", border: "1px solid rgb(220, 38, 38)", color: "#fca5a5", fontSize: "0.75rem" }}>
+                  {error}
+                </div>
+              )}
+
               {/* Name Fields */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
                 <div>
@@ -320,17 +360,22 @@ const SignUpPage = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                style={{ width: "100%", padding: "0.85rem", fontSize: "0.75rem", fontWeight: "800", color: "white", background: "linear-gradient(135deg, #ec4899 0%, #db2777 100%)", border: "none", borderRadius: "0.75rem", cursor: "pointer", transition: "all 0.3s", boxShadow: "0 10px 30px rgba(236, 72, 153, 0.3)", letterSpacing: "0.05em", textTransform: "uppercase", marginTop: "0.3rem" }}
+                disabled={loading}
+                style={{ width: "100%", padding: "0.85rem", fontSize: "0.75rem", fontWeight: "800", color: "white", background: loading ? "#888" : "linear-gradient(135deg, #ec4899 0%, #db2777 100%)", border: "none", borderRadius: "0.75rem", cursor: loading ? "not-allowed" : "pointer", transition: "all 0.3s", boxShadow: "0 10px 30px rgba(236, 72, 153, 0.3)", letterSpacing: "0.05em", textTransform: "uppercase", marginTop: "0.3rem" }}
                 onMouseEnter={(e) => {
-                  e.target.style.boxShadow = "0 15px 45px rgba(236, 72, 153, 0.4)";
-                  e.target.style.transform = "translateY(-2px)";
+                  if (!loading) {
+                    e.target.style.boxShadow = "0 15px 45px rgba(236, 72, 153, 0.4)";
+                    e.target.style.transform = "translateY(-2px)";
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.boxShadow = "0 10px 30px rgba(236, 72, 153, 0.3)";
-                  e.target.style.transform = "translateY(0)";
+                  if (!loading) {
+                    e.target.style.boxShadow = "0 10px 30px rgba(236, 72, 153, 0.3)";
+                    e.target.style.transform = "translateY(0)";
+                  }
                 }}
               >
-                Create My Account
+                {loading ? "Creating Account..." : "Create My Account"}
               </button>
             </form>
 

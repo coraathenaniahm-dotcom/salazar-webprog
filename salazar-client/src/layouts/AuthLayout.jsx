@@ -12,7 +12,6 @@ const AuthLayout = () => {
             </div>
           </div>
         </div>
-
         <main className="flex items-center bg-zinc-50 px-6 py-10 sm:px-10 lg:px-16">
           <div className="mx-auto w-full max-w-md">
             <Outlet />

@@ -1,11 +1,10 @@
 import React from "react";
-import { Box, Typography, Button } from "@mui/material";
-import PrintIcon from "@mui/icons-material/Print";
+import { Box, Typography } from "@mui/material";
 import {
   LineChart, Line, AreaChart, Area, BarChart, Bar,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
-
+ 
 const salesData = [
   { month: "Jan", sales: 4000, revenue: 2400, profit: 2400 },
   { month: "Feb", sales: 3000, revenue: 1398, profit: 2210 },
@@ -14,7 +13,7 @@ const salesData = [
   { month: "May", sales: 1890, revenue: 4800, profit: 2181 },
   { month: "Jun", sales: 2390, revenue: 3800, profit: 2500 },
 ];
-
+ 
 const productData = [
   { name: "Product A", sales: 120, units: 240, revenue: 221 },
   { name: "Product B", sales: 221, units: 229, revenue: 200 },
@@ -22,24 +21,32 @@ const productData = [
   { name: "Product D", sales: 200, units: 221, revenue: 250 },
   { name: "Product E", sales: 200, units: 229, revenue: 210 },
 ];
-
+ 
 const card = {
   background: "#fff", borderRadius: "14px",
   boxShadow: "0 2px 16px rgba(236,90,140,0.08)",
   border: "1px solid #F0D6E2",
 };
-
+ 
+function PrintIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+    </svg>
+  );
+}
+ 
 export default function ReportsPage() {
   const handlePrint = () => {
     const printWindow = window.open("", "_blank");
     const now = new Date().toLocaleString();
-
+ 
     printWindow.document.write(`
       <!DOCTYPE html>
       <html>
         <head>
           <title>Print Report - School</title>
-          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"><\/script>
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
             body { font-family: 'Segoe UI', sans-serif; padding: 40px; color: #2D1B27; background: #fff; }
@@ -60,27 +67,13 @@ export default function ReportsPage() {
         </head>
         <body>
           <div style="margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
-  <div>
-    <h1>Reports Summary</h1>
-    <p class="subtitle">Analytics overview for generated reports, category breakdown, and completion performance.<br/>Prepared on ${now}</p>
-  </div>
-  <button onclick="window.close()" style="
-    padding: 9px 18px;
-    background: #EC5A8C;
-    color: #fff;
-    border: none;
-    border-radius: 9px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    font-family: 'Segoe UI', sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  ">&#8592; Back</button>
-</div>
-          <p class="subtitle">Analytics overview for generated reports, category breakdown, and completion performance.<br/>Prepared on ${now}</p>
-
+            <div>
+              <h1>Reports Summary</h1>
+              <p class="subtitle">Analytics overview for generated reports, category breakdown, and completion performance.<br/>Prepared on ${now}</p>
+            </div>
+            <button onclick="window.close()" style="padding:9px 18px;background:#EC5A8C;color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Segoe UI',sans-serif;">&#8592; Back</button>
+          </div>
+ 
           <div class="chart-row">
             <div class="chart-box">
               <div class="section-title">Monthly Sales Trend</div>
@@ -93,13 +86,13 @@ export default function ReportsPage() {
               <canvas id="areaChart"></canvas>
             </div>
           </div>
-
+ 
           <div class="chart-box section">
             <div class="section-title">Product Performance</div>
             <div class="section-desc">Comparison of sales, units, and revenue across all products.</div>
             <canvas id="barChart"></canvas>
           </div>
-
+ 
           <script>
             const salesData = {
               labels: ["Jan","Feb","Mar","Apr","May","Jun"],
@@ -113,7 +106,7 @@ export default function ReportsPage() {
               units:   [240,229,200,221,229],
               revenue: [221,200,221,250,210],
             };
-
+ 
             new Chart(document.getElementById("lineChart"), {
               type: "line",
               data: {
@@ -126,7 +119,7 @@ export default function ReportsPage() {
               },
               options: { plugins: { legend: { labels: { font: { size: 11 } } } }, scales: { x: { grid: { display: false } }, y: { grid: { color: "rgba(236,90,140,0.08)" } } } },
             });
-
+ 
             new Chart(document.getElementById("areaChart"), {
               type: "line",
               data: {
@@ -139,7 +132,7 @@ export default function ReportsPage() {
               },
               options: { plugins: { legend: { labels: { font: { size: 11 } } } }, scales: { x: { grid: { display: false } }, y: { grid: { color: "rgba(236,90,140,0.08)" } } } },
             });
-
+ 
             new Chart(document.getElementById("barChart"), {
               type: "bar",
               data: {
@@ -152,15 +145,15 @@ export default function ReportsPage() {
               },
               options: { plugins: { legend: { labels: { font: { size: 11 } } } }, scales: { x: { grid: { display: false } }, y: { grid: { color: "rgba(236,90,140,0.08)" } } } },
             });
-
+ 
             window.onload = () => setTimeout(() => window.print(), 800);
-          </script>
+          <\/script>
         </body>
       </html>
     `);
     printWindow.document.close();
   };
-
+ 
   return (
     <Box>
       {/* HEADER ROW */}
@@ -178,11 +171,11 @@ export default function ReportsPage() {
             "&:hover": { background: "#C2185B" },
           }}
         >
-          <PrintIcon sx={{ fontSize: 16 }} />
+          <PrintIcon />
           Print PDF
         </Box>
       </Box>
-
+ 
       {/* TOP TWO CHARTS */}
       <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", mb: 3 }}>
         <Box sx={card}>
@@ -204,7 +197,7 @@ export default function ReportsPage() {
             </ResponsiveContainer>
           </Box>
         </Box>
-
+ 
         <Box sx={card}>
           <Box sx={{ px: "20px", pt: "18px", pb: 0 }}>
             <Typography sx={{ fontSize: 14.5, fontWeight: 600, color: "#2D1B27" }}>Revenue Overview</Typography>
@@ -228,7 +221,7 @@ export default function ReportsPage() {
           </Box>
         </Box>
       </Box>
-
+ 
       {/* PRODUCT PERFORMANCE */}
       <Box sx={card}>
         <Box sx={{ px: "20px", pt: "18px", pb: 0 }}>
