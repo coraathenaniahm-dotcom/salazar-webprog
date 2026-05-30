@@ -17,7 +17,6 @@ import DashboardPage from "./pages/DashboardPages/DashboardPage";
 import ReportsPage from "./pages/DashboardPages/ReportsPage";
 import ArticlesPage from "./pages/DashboardPages/ArticlesPage";
 import UsersPage from "./pages/DashboardPages/UsersPage";
-import DashArticleListPage from "./pages/DashboardPages/DashArticleListPage";
 
 import NotFoundPage from "./pages/NotFoundPage";
 import ErrorPage from "./pages/ErrorPage";
@@ -51,10 +50,9 @@ const routes = [
       { index: true, element: <DashboardPage /> },
       { path: "reports", element: <ReportsPage /> },
       { path: "articles", element: <ArticlesPage /> },
-      { path: "articles-list", element: <DashArticleListPage /> },
       { 
         path: "users", 
-        element: <ProtectedRoute><UsersPage /></ProtectedRoute> 
+        element: <ProtectedRoute requiredRole="admin"><UsersPage /></ProtectedRoute> 
       },
     ],
   },

@@ -12,9 +12,15 @@ const SignUpPage = () => {
     password: "",
     confirmPassword: "",
     agreeToTerms: false,
+    role: "editor",
+    age: "",
+    gender: "Male",
+    isActive: true,
   });
 
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -54,12 +60,12 @@ const SignUpPage = () => {
         email: formData.email,
         password: formData.password,
         username: formData.email.split("@")[0],
-        age: "18",
-        gender: "Male",
+        age: formData.age,
+        gender: formData.gender,
         contactNumber: "00000000000",
         address: "Not provided",
-        type: "editor",
-        isActive: true,
+        type: formData.role,
+        isActive: formData.isActive,
       });
 
       alert("Sign up successful! Please log in.");
@@ -250,20 +256,47 @@ const SignUpPage = () => {
                 />
               </div>
 
-              {/* Password Fields */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+              {/* Role Selection */}
+              <div>
+                <label htmlFor="role" style={{ display: "block", fontSize: "0.7rem", fontWeight: "700", color: "#cbd5e1", marginBottom: "0.3rem", letterSpacing: "0.05em" }}>
+                  SELECT ROLE
+                </label>
+                <select
+                  id="role"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  style={{ width: "100%", padding: "0.7rem 0.75rem", fontSize: "0.8rem", border: "2px solid rgba(236, 72, 153, 0.2)", borderRadius: "0.75rem", background: "rgba(236, 72, 153, 0.05)", color: "#e2e8f0", outline: "none", transition: "all 0.3s", boxSizing: "border-box", cursor: "pointer" }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = "#ec4899";
+                    e.target.style.boxShadow = "0 0 0 3px rgba(236, 72, 153, 0.2)";
+                    e.target.style.background = "rgba(236, 72, 153, 0.15)";
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = "rgba(236, 72, 153, 0.2)";
+                    e.target.style.boxShadow = "none";
+                    e.target.style.background = "rgba(236, 72, 153, 0.05)";
+                  }}
+                >
+                  <option value="viewer" style={{ background: "#0f172a", color: "#e2e8f0" }}>Viewer</option>
+                  <option value="editor" style={{ background: "#0f172a", color: "#e2e8f0" }}>Editor</option>
+                  <option value="admin" style={{ background: "#0f172a", color: "#e2e8f0" }}>Admin</option>
+                </select>
+              </div>
+
+              {/* Age, Gender, Status Row */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.75rem" }}>
                 <div>
-                  <label htmlFor="password" style={{ display: "block", fontSize: "0.7rem", fontWeight: "700", color: "#cbd5e1", marginBottom: "0.3rem", letterSpacing: "0.05em" }}>
-                    PASSWORD
+                  <label htmlFor="age" style={{ display: "block", fontSize: "0.7rem", fontWeight: "700", color: "#cbd5e1", marginBottom: "0.3rem", letterSpacing: "0.05em" }}>
+                    AGE
                   </label>
                   <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    value={formData.password}
+                    id="age"
+                    type="number"
+                    name="age"
+                    value={formData.age}
                     onChange={handleChange}
-                    placeholder="••••••••"
-                    autoComplete="new-password"
+                    placeholder="18"
                     required
                     style={{ width: "100%", padding: "0.7rem 0.75rem", fontSize: "0.8rem", border: "2px solid rgba(236, 72, 153, 0.2)", borderRadius: "0.75rem", background: "rgba(236, 72, 153, 0.05)", color: "#e2e8f0", outline: "none", transition: "all 0.3s", boxSizing: "border-box" }}
                     onFocus={(e) => {
@@ -279,30 +312,145 @@ const SignUpPage = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="confirmPassword" style={{ display: "block", fontSize: "0.7rem", fontWeight: "700", color: passwordMatch ? "#cbd5e1" : "#fc8181", marginBottom: "0.3rem", letterSpacing: "0.05em" }}>
-                    CONFIRM
+                  <label htmlFor="gender" style={{ display: "block", fontSize: "0.7rem", fontWeight: "700", color: "#cbd5e1", marginBottom: "0.3rem", letterSpacing: "0.05em" }}>
+                    GENDER
                   </label>
-                  <input
-                    id="confirmPassword"
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
+                  <select
+                    id="gender"
+                    name="gender"
+                    value={formData.gender}
                     onChange={handleChange}
-                    placeholder="••••••••"
-                    autoComplete="new-password"
-                    required
-                    style={{ width: "100%", padding: "0.7rem 0.75rem", fontSize: "0.8rem", border: `2px solid ${passwordMatch ? "rgba(236, 72, 153, 0.2)" : "rgba(252, 165, 165, 0.4)"}`, borderRadius: "0.75rem", background: passwordMatch ? "rgba(236, 72, 153, 0.05)" : "rgba(127, 29, 29, 0.3)", color: "#e2e8f0", outline: "none", transition: "all 0.3s", boxSizing: "border-box" }}
+                    style={{ width: "100%", padding: "0.7rem 0.75rem", fontSize: "0.8rem", border: "2px solid rgba(236, 72, 153, 0.2)", borderRadius: "0.75rem", background: "rgba(236, 72, 153, 0.05)", color: "#e2e8f0", outline: "none", transition: "all 0.3s", boxSizing: "border-box", cursor: "pointer" }}
                     onFocus={(e) => {
                       e.target.style.borderColor = "#ec4899";
                       e.target.style.boxShadow = "0 0 0 3px rgba(236, 72, 153, 0.2)";
                       e.target.style.background = "rgba(236, 72, 153, 0.15)";
                     }}
                     onBlur={(e) => {
-                      e.target.style.borderColor = passwordMatch ? "rgba(236, 72, 153, 0.2)" : "rgba(252, 165, 165, 0.4)";
+                      e.target.style.borderColor = "rgba(236, 72, 153, 0.2)";
                       e.target.style.boxShadow = "none";
-                      e.target.style.background = passwordMatch ? "rgba(236, 72, 153, 0.05)" : "rgba(127, 29, 29, 0.3)";
+                      e.target.style.background = "rgba(236, 72, 153, 0.05)";
                     }}
-                  />
+                  >
+                    <option value="Male" style={{ background: "#0f172a", color: "#e2e8f0" }}>Male</option>
+                    <option value="Female" style={{ background: "#0f172a", color: "#e2e8f0" }}>Female</option>
+                    <option value="Other" style={{ background: "#0f172a", color: "#e2e8f0" }}>Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="status" style={{ display: "block", fontSize: "0.7rem", fontWeight: "700", color: "#cbd5e1", marginBottom: "0.3rem", letterSpacing: "0.05em" }}>
+                    STATUS
+                  </label>
+                  <select
+                    id="status"
+                    name="isActive"
+                    value={formData.isActive ? "Active" : "Inactive"}
+                    onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.value === "Active" }))}
+                    style={{ width: "100%", padding: "0.7rem 0.75rem", fontSize: "0.8rem", border: "2px solid rgba(236, 72, 153, 0.2)", borderRadius: "0.75rem", background: "rgba(236, 72, 153, 0.05)", color: "#e2e8f0", outline: "none", transition: "all 0.3s", boxSizing: "border-box", cursor: "pointer" }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = "#ec4899";
+                      e.target.style.boxShadow = "0 0 0 3px rgba(236, 72, 153, 0.2)";
+                      e.target.style.background = "rgba(236, 72, 153, 0.15)";
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = "rgba(236, 72, 153, 0.2)";
+                      e.target.style.boxShadow = "none";
+                      e.target.style.background = "rgba(236, 72, 153, 0.05)";
+                    }}
+                  >
+                    <option value="Active" style={{ background: "#0f172a", color: "#e2e8f0" }}>✓ Active</option>
+                    <option value="Inactive" style={{ background: "#0f172a", color: "#e2e8f0" }}>✕ Inactive</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Password Fields */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+                <div>
+                  <label htmlFor="password" style={{ display: "block", fontSize: "0.7rem", fontWeight: "700", color: "#cbd5e1", marginBottom: "0.3rem", letterSpacing: "0.05em" }}>
+                    PASSWORD
+                  </label>
+                  <div style={{ position: "relative" }}>
+                    <input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      placeholder="••••••••"
+                      autoComplete="new-password"
+                      required
+                      style={{ width: "100%", padding: "0.7rem 0.75rem", paddingRight: "2.5rem", fontSize: "0.8rem", border: "2px solid rgba(236, 72, 153, 0.2)", borderRadius: "0.75rem", background: "rgba(236, 72, 153, 0.05)", color: "#e2e8f0", outline: "none", transition: "all 0.3s", boxSizing: "border-box" }}
+                      onFocus={(e) => {
+                        e.target.style.borderColor = "#ec4899";
+                        e.target.style.boxShadow = "0 0 0 3px rgba(236, 72, 153, 0.2)";
+                        e.target.style.background = "rgba(236, 72, 153, 0.15)";
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = "rgba(236, 72, 153, 0.2)";
+                        e.target.style.boxShadow = "none";
+                        e.target.style.background = "rgba(236, 72, 153, 0.05)";
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{ position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#ec4899", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: "0.3rem" }}
+                    >
+                      {showPassword ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.81-2.95 3.69-4.95-2.5-4.5-7.4-7.5-12.25-7.5-2.63 0-5.09.86-7.14 2.53l2.13 2.13C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28L3.46 8.3A11.804 11.804 0 001 11.5c2.5 4.5 7.4 7.5 12.25 7.5 2.13 0 4.15-.34 6.07-1.01l2.93 2.93 1.41-1.41L3.41 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm2.31-7.4C6.5 2.5 4.1 3.3 2.6 4.8l2.36 2.36c.9-.83 2.1-1.35 3.42-1.35 2.76 0 5 2.24 5 5 0 1.32-.52 2.52-1.35 3.42l2.36 2.36c1.5-1.5 2.3-3.9 2.3-6.47 0-5.52-4.48-10-10-10z"/>
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="confirmPassword" style={{ display: "block", fontSize: "0.7rem", fontWeight: "700", color: passwordMatch ? "#cbd5e1" : "#fc8181", marginBottom: "0.3rem", letterSpacing: "0.05em" }}>
+                    CONFIRM
+                  </label>
+                  <div style={{ position: "relative" }}>
+                    <input
+                      id="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      placeholder="••••••••"
+                      autoComplete="new-password"
+                      required
+                      style={{ width: "100%", padding: "0.7rem 0.75rem", paddingRight: "2.5rem", fontSize: "0.8rem", border: `2px solid ${passwordMatch ? "rgba(236, 72, 153, 0.2)" : "rgba(252, 165, 165, 0.4)"}`, borderRadius: "0.75rem", background: passwordMatch ? "rgba(236, 72, 153, 0.05)" : "rgba(127, 29, 29, 0.3)", color: "#e2e8f0", outline: "none", transition: "all 0.3s", boxSizing: "border-box" }}
+                      onFocus={(e) => {
+                        e.target.style.borderColor = "#ec4899";
+                        e.target.style.boxShadow = "0 0 0 3px rgba(236, 72, 153, 0.2)";
+                        e.target.style.background = "rgba(236, 72, 153, 0.15)";
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = passwordMatch ? "rgba(236, 72, 153, 0.2)" : "rgba(252, 165, 165, 0.4)";
+                        e.target.style.boxShadow = "none";
+                        e.target.style.background = passwordMatch ? "rgba(236, 72, 153, 0.05)" : "rgba(127, 29, 29, 0.3)";
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      style={{ position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#ec4899", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: "0.3rem" }}
+                    >
+                      {showConfirmPassword ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.81-2.95 3.69-4.95-2.5-4.5-7.4-7.5-12.25-7.5-2.63 0-5.09.86-7.14 2.53l2.13 2.13C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28L3.46 8.3A11.804 11.804 0 001 11.5c2.5 4.5 7.4 7.5 12.25 7.5 2.13 0 4.15-.34 6.07-1.01l2.93 2.93 1.41-1.41L3.41 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm2.31-7.4C6.5 2.5 4.1 3.3 2.6 4.8l2.36 2.36c.9-.83 2.1-1.35 3.42-1.35 2.76 0 5 2.24 5 5 0 1.32-.52 2.52-1.35 3.42l2.36 2.36c1.5-1.5 2.3-3.9 2.3-6.47 0-5.52-4.48-10-10-10z"/>
+                        </svg>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
 

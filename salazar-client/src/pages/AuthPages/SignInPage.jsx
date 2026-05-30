@@ -35,6 +35,13 @@ const SignInPage = () => {
 
       const userData = response.data.user;
 
+      // Prevent viewers from logging in
+      if (userData.type === "viewer") {
+        setError("Viewers are not allowed to log in.");
+        setLoading(false);
+        return;
+      }
+
       // Store user data in localStorage
       localStorage.setItem("user", JSON.stringify(userData));
       if (formData.rememberMe) {

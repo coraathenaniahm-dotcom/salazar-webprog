@@ -49,15 +49,6 @@ const navItems = [
       </svg>
     ),
   },
-  {
-    label: "Articles List",
-    path: "/dashboard/articles-list",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M15 5H5v14h10V5zm2-2v18H3V3h14zm4 4h2v2h-2V5zm0 4h2v2h-2V9zm0 4h2v2h-2v-2z"/>
-      </svg>
-    ),
-  },
 ];
  
 export default function DashLayout() {
