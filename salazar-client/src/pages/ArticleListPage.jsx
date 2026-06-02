@@ -1,7 +1,53 @@
+import { useState, useEffect } from 'react';
 import ArticleList from '../components/ArticleList';
-import articles from '../assets/article-content.js';
+import { fetchArticles, deleteArticle } from '../services/ArticleService';
 
 const ArticleListPage = () => {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    loadArticles();
+  }, []);
+
+  const loadArticles = async () => {
+    try {
+      setLoading(true);
+      const response = await fetchArticles();
+      const articleData = response.data.articles || response.data || [];
+      // Convert database format to display format
+      const convertedArticles = articleData.map(article => ({
+        _id: article._id,
+        name: article.slug,
+        title: article.title,
+        content: [article.preview || article.content || article.title],
+        author: article.author,
+        category: article.category,
+        status: article.status,
+      }));
+      setArticles(convertedArticles);
+      setError(null);
+    } catch (err) {
+      console.error('Failed to fetch articles:', err);
+      setError('Failed to load articles');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this article?')) {
+      try {
+        await deleteArticle(id);
+        setArticles(prev => prev.filter(article => article._id !== id));
+      } catch (err) {
+        console.error('Failed to delete article:', err);
+        alert('Failed to delete article');
+      }
+    }
+  };
+
   return (
     <div style={{ width: '100%', background: '#ffffff' }}>
 
@@ -54,7 +100,11 @@ const ArticleListPage = () => {
           <h2 style={{ marginBottom: '3rem', fontSize: '1.5rem', fontWeight: '700', color: '#000' }}>
             Fuggler Guide
           </h2>
-          <ArticleList articles={articles} />
+          {loading && <p style={{ textAlign: 'center', color: '#666' }}>Loading articles...</p>}
+          {error && <p style={{ textAlign: 'center', color: '#e53e3e' }}>{error}</p>}
+          {!loading && !error && (
+            <ArticleList articles={articles} onDelete={handleDelete} />
+          )}
         </div>
       </section>
 

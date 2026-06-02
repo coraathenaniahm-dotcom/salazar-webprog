@@ -13,7 +13,7 @@ const SignUpPage = () => {
     confirmPassword: "",
     agreeToTerms: false,
     role: "editor",
-    age: "",
+    age: "18",
     gender: "Male",
     isActive: true,
   });
@@ -50,6 +50,11 @@ const SignUpPage = () => {
       return;
     }
 
+    if (!formData.age || formData.age < 1 || formData.age > 150) {
+      setError("Please enter a valid age between 1 and 150.");
+      return;
+    }
+
     setError("");
     setLoading(true);
 
@@ -60,7 +65,7 @@ const SignUpPage = () => {
         email: formData.email,
         password: formData.password,
         username: formData.email.split("@")[0],
-        age: formData.age,
+        age: String(formData.age),
         gender: formData.gender,
         contactNumber: "00000000000",
         address: "Not provided",

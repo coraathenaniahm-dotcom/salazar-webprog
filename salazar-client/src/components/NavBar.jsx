@@ -68,6 +68,30 @@ const NavBar = () => {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <NavLink
+            to="/auth/signup"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              color: '#ec4899',
+              padding: '0.5rem 1.25rem',
+              background: '#fce7f3',
+              borderRadius: '2rem',
+              border: '2px solid #ec4899',
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+              outline: 'none'
+            }}
+          >
+            Sign Up
+          </NavLink>
+
+          <NavLink
             to="/auth/signin"
             style={{
               display: 'flex',

@@ -1,5 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import articles from '../assets/article-content.js';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import constants from '../constants';
 
 import article1 from '../assets/article1.png';
 import article2 from '../assets/article2.png';
@@ -12,15 +14,50 @@ const images = [article1, article2, article3, article4, article5];
 const ArticlePage = () => {
   const { name } = useParams();
   const navigate = useNavigate();
+  const [article, setArticle] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const article = articles.find((a) => a.name === name);
-  const articleIndex = articles.findIndex((a) => a.name === name);
-  const articleImg = images[articleIndex];
+  useEffect(() => {
+    const fetchArticle = async () => {
+      try {
+        setLoading(true);
+        // Fetch all articles and find by slug
+        const response = await axios.get(`${constants.HOST}/articles`);
+        const articles = response.data.articles || response.data || [];
+        const foundArticle = articles.find(a => a.slug === name);
+        
+        if (foundArticle) {
+          setArticle(foundArticle);
+          setError(null);
+        } else {
+          setError('Article not found');
+        }
+      } catch (err) {
+        console.error('Failed to fetch article:', err);
+        setError('Failed to load article');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (!article) {
+    fetchArticle();
+  }, [name]);
+
+  if (loading) {
     return (
       <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: '800', color: '#000' }}>Article not found.</h1>
+        <p style={{ fontSize: '1rem', color: '#666' }}>Loading article...</p>
+      </div>
+    );
+  }
+
+  if (error || !article) {
+    return (
+      <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: '800', color: '#000' }}>
+          {error || 'Article not found.'}
+        </h1>
         <button
           onClick={() => navigate('/articles')}
           style={{
@@ -38,6 +75,9 @@ const ArticlePage = () => {
     );
   }
 
+  // Get a random image for the article
+  const articleImg = images[Math.floor(Math.random() * images.length)];
+
   return (
     <div style={{ width: '100%', background: '#ffffff' }}>
 
@@ -50,8 +90,11 @@ const ArticlePage = () => {
           <h1 style={{ marginBottom: '0.75rem', fontSize: '3rem', fontWeight: '800', color: '#000', lineHeight: '1.1' }}>
             {article.title}
           </h1>
-          <p style={{ fontSize: '1rem', color: '#6b7280' }}>
-            A delightful showcase of our Fuggler collection with unique profiles.
+          <p style={{ fontSize: '1rem', color: '#6b7280', marginBottom: '0.5rem' }}>
+            By {article.author} • {article.category}
+          </p>
+          <p style={{ fontSize: '0.9rem', color: '#9ca3af', marginBottom: '1rem' }}>
+            Slug: <code style={{ background: '#f3f4f6', padding: '0.25rem 0.5rem', borderRadius: '0.25rem' }}>{article.slug}</code>
           </p>
           <button
             onClick={() => navigate('/articles')}
@@ -88,12 +131,54 @@ const ArticlePage = () => {
               display: 'block',
             }}
           />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {article.content.map((paragraph, i) => (
-              <p key={i} style={{ fontSize: '1rem', color: '#374151', lineHeight: '1.8', margin: 0 }}>
-                {paragraph}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#000', marginBottom: '1rem' }}>
+                Description
+              </h2>
+              <p style={{ fontSize: '1rem', color: '#374151', lineHeight: '1.8', margin: 0 }}>
+                {article.preview || article.content || article.title}
               </p>
-            ))}
+            </div>
+            
+            {article.content && (
+              <div>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#000', marginBottom: '1rem' }}>
+                  Full Content
+                </h2>
+                <p style={{ fontSize: '1rem', color: '#374151', lineHeight: '1.8', margin: 0, whiteSpace: 'pre-wrap' }}>
+                  {article.content}
+                </p>
+              </div>
+            )}
+
+            {/* Article Metadata */}
+            <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '2px solid #e5e7eb', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+              <div>
+                <p style={{ fontSize: '0.75rem', fontWeight: '600', textTransform: 'uppercase', color: '#9ca3af', marginBottom: '0.25rem' }}>
+                  Author
+                </p>
+                <p style={{ fontSize: '1rem', fontWeight: '600', color: '#000' }}>
+                  {article.author}
+                </p>
+              </div>
+              <div>
+                <p style={{ fontSize: '0.75rem', fontWeight: '600', textTransform: 'uppercase', color: '#9ca3af', marginBottom: '0.25rem' }}>
+                  Category
+                </p>
+                <p style={{ fontSize: '1rem', fontWeight: '600', color: '#ec4899' }}>
+                  {article.category}
+                </p>
+              </div>
+              <div>
+                <p style={{ fontSize: '0.75rem', fontWeight: '600', textTransform: 'uppercase', color: '#9ca3af', marginBottom: '0.25rem' }}>
+                  Status
+                </p>
+                <p style={{ fontSize: '1rem', fontWeight: '600', color: article.status === 'active' ? '#10b981' : '#ef4444' }}>
+                  {article.status === 'active' ? '✓ Published' : '✕ Draft'}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
