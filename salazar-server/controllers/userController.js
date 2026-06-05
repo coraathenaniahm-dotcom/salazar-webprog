@@ -13,11 +13,11 @@ const getUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
     try {
-        const { firstName, lastName, email, password, username, age, gender, contactNumber, address, role, status } = req.body;
+        const { firstName, lastName, email, password, username, age, gender, contactNumber, address, type, status } = req.body;
         
         // Validate required fields
-        if (!firstName || !lastName || !email || !password || !username) {
-            return res.status(400).json({ message: 'Please provide all required fields' });
+        if (!firstName || !lastName || !email || !password || !username || !age) {
+            return res.status(400).json({ message: 'Please provide all required fields including age' });
         }
 
         // Check if user already exists
@@ -35,11 +35,11 @@ const createUser = async (req, res) => {
             email,
             username,
             password: hashedPassword,
-            age: age || '',
+            age: String(age), // Convert to string to ensure it matches schema
             gender: gender || 'Male',
-            contactNumber: contactNumber || '',
-            address: address || '',
-            type: role || 'viewer'
+            contactNumber: contactNumber || '00000000000',
+            address: address || 'Not provided',
+            type: type || 'viewer'
         });
 
         await newUser.save();
