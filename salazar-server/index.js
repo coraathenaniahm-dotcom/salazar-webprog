@@ -2,8 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const bodyParser = require("body-parser");
-const jsonParser = bodyParser.json();
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const articleRoutes = require("./routes/articleRoutes");
@@ -13,12 +11,9 @@ const app = express();
 // Database Connection
 connectDB();
 
+// Middleware
 app.use(express.json());
-
-//Middleware
-app.use(jsonParser);
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
 // cors options
 const corsOptions = {
@@ -29,8 +24,8 @@ const corsOptions = {
   preflightContinue: false,
   optionsSuccessStatus: 204,
 };
-app.options("", cors(corsOptions));
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 // Curb Cores Error by adding a header here
 app.use((req, res, next) => {
