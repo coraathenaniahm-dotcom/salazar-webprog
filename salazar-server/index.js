@@ -25,7 +25,6 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
 
 // Curb Cores Error by adding a header here
 app.use((req, res, next) => {
