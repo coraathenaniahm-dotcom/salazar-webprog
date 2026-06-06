@@ -11,21 +11,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Connect DB on every request (required for Vercel serverless)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    res.status(500).json({ message: 'Database connection failed' });
+  }
+});
+
 app.use('/api/users', userRoutes);
 app.use('/api/articles', articleRoutes);
 
 app.get('/', (req, res) => {
   res.json({ status: 'ok' });
-});
-
-// Connect DB then start server
-const PORT = process.env.PORT || 8000;
-connectDB().then(() => {
-  if (process.env.NODE_ENV !== 'production') {
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  }
 });
 
 module.exports = app;
