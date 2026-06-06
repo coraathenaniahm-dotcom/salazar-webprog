@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "salazar-server/index.js",
+      "src": "index.js",
       "use": "@vercel/node"
     }
   ],
@@ -19,11 +19,11 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/salazar-server/index.js"
+      "dest": "/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/salazar-server/index.js"
+      "dest": "/index.js"
     }
   ]
 }
