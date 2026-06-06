@@ -6,7 +6,6 @@ const userRoutes = require('./routes/userRoutes');
 const articleRoutes = require('./routes/articleRoutes');
 
 dotenv.config();
-connectDB();
 
 const app = express();
 app.use(cors());
@@ -19,11 +18,14 @@ app.get('/', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+// Connect DB then start server
 const PORT = process.env.PORT || 8000;
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
+connectDB().then(() => {
+  if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  }
+});
 
 module.exports = app;
