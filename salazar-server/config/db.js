@@ -1,19 +1,10 @@
 const mongoose = require('mongoose');
 
-const options = {
-    serverSelectionTimeoutMS: 10000,
-    bufferCommands: false,
-};
-
-if (process.env.MONGO_DB_NAME) {
-    options.dbName = process.env.MONGO_DB_NAME;
-}
-
 const cached = global.mongoose || (global.mongoose = { conn: null, promise: null });
 
 const connectDB = async () => {
     if (!process.env.MONGO_URI) {
-        throw new Error('MONGO_URI is not defined. Set it in Vercel environment variables.');
+        throw new Error('MONGO_URI is not defined.');
     }
 
     if (cached.conn) {
@@ -21,10 +12,8 @@ const connectDB = async () => {
     }
 
     if (!cached.promise) {
-        cached.promise = mongoose.connect(process.env.MONGO_URI, options)
-            .then((mongooseInstance) => {
-                return mongooseInstance;
-            })
+        cached.promise = mongoose.connect(process.env.MONGO_URI)
+            .then((mongooseInstance) => mongooseInstance)
             .catch((error) => {
                 cached.promise = null;
                 throw error;
