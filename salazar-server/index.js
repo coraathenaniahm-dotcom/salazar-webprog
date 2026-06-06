@@ -35,7 +35,7 @@ app.use(async (req, res, next) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/articles', articleRoutes);
-
+app.use(cors({origin: 'salazar-client-olive.vercel.app'}));
 app.get('/', (req, res) => {
   res.json({ status: 'ok' });
 });
