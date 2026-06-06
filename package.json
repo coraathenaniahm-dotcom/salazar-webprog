@@ -6,7 +6,8 @@
   "main": "salazar-server/index.js",
   "scripts": {
     "start": "node salazar-server/index.js",
-    "dev": "nodemon salazar-server/index.js"
+    "dev": "nodemon salazar-server/index.js",
+    "build": "cd salazar-client && npm install && npm run build"
   },
   "workspaces": [
     "salazar-client",
