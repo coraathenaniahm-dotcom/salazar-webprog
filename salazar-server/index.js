@@ -9,7 +9,6 @@ dotenv.config();
 
 const app = express();
 
-// Handle CORS before everything
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
@@ -23,7 +22,6 @@ app.use((req, res, next) => {
 app.use(cors());
 app.use(express.json());
 
-// Connect DB on every request
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -35,9 +33,12 @@ app.use(async (req, res, next) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/articles', articleRoutes);
-app.use(cors({origin: 'salazar-client-olive.vercel.app'}));
+
 app.get('/', (req, res) => {
   res.json({ status: 'ok' });
 });
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 module.exports = app;
