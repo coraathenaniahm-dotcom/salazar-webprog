@@ -19,11 +19,11 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "salazar-server/index.js"
+      "dest": "/salazar-server/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "salazar-server/index.js"
+      "dest": "/salazar-server/index.js"
     }
   ]
 }
