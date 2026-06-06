@@ -1,5 +1,5 @@
 {
-  "name": "salazar-client",
+  "name": "salazar-webprog",
   "private": true,
   "version": "1.0.0",
   "type": "commonjs",
@@ -7,12 +7,8 @@
   "scripts": {
     "start": "node salazar-server/index.js",
     "dev": "nodemon salazar-server/index.js",
-    "build": "cd salazar-client && npm install && npm run build"
+    "build": "npm install --prefix salazar-client && npm run build --prefix salazar-client"
   },
-  "workspaces": [
-    "salazar-client",
-    "salazar-server"
-  ],
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.4.2",
